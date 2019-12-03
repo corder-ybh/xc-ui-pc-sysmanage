@@ -11,6 +11,12 @@ module.exports = {
             pathRewrite:{
                 '^/banner':''
             }*/
+        },
+        '/api/cms': {
+          target: 'http://127.0.0.1:31001',
+          pathRewrite: {
+            '^/api': '' // 实际请求去掉/api
+          }
         }
     }
 }

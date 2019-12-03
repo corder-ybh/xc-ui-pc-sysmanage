@@ -17,7 +17,7 @@ import utilApi from './common/utils';
 Vue.config.productionTip = false
 
 // 在Vue中全局使用mintui
-Vue.use(ElementUI)
+Vue.use(ElementUI, { size: 'small' })
 Vue.use(Vuex)
 Vue.use(VueRouter)
 
