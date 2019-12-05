@@ -11,10 +11,9 @@
           :value="item.siteId">
         </el-option>
       </el-select>
-      页面别名：<el-input v-model="params.pageAliase" style="width: 100px"></el-input>
       <el-button type="primary" v-on:click="query" size="small">查询</el-button>
       <router-link class="mui-tab-item" :to="{path:'/cms/page/add/',query:{page:this.params.page,siteId:this.params.siteId}}">
-        <el-button type="primary">新增页面</el-button>
+        <el-button type="primary">新增模板</el-button>
       </router-link>
     </el-form>
     <el-table
@@ -23,22 +22,18 @@
       style="width: 100%">
       <el-table-column type="index" width="60">
       </el-table-column>
-      <el-table-column prop="pageName" label="页面名称" width="120">
+      <el-table-column prop="siteId" label="SiteId" width="120">
       </el-table-column>
-      <el-table-column prop="pageAliase" label="别名" width="120">
+      <el-table-column prop="templateId" label="模板ID" width="120">
       </el-table-column>
-      <el-table-column prop="pageType" label="页面类型" width="150">
+      <el-table-column prop="templateName" label="模板名称" width="150">
       </el-table-column>
-      <el-table-column prop="pageWebPath" label="访问路径" width="250">
+      <el-table-column prop="templateFileId" label="模板文件ID" width="250">
       </el-table-column>
-      <el-table-column prop="pagePhysicalPath" label="物理路径" width="250">
-      </el-table-column>
-      <el-table-column prop="pageCreateTime" label="创建时间" width="180" >
-      </el-table-column>
-      <el-table-column label="操作" width="80">
+      <el-table-column label="操作" width="100">
         <template slot-scope="page">
-          <el-button type="text" @click="edit(page.row.pageId)">编辑</el-button>
-          <el-button type="text" @click="del(page.row.pageId)">删除</el-button>
+          <el-button type="text" @click="edit(page.row.templateId)">编辑</el-button>
+          <el-button type="text" @click="del(page.row.templateId)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -64,33 +59,32 @@
         total:0,
         params:{
           siteId:'',
-          pageAliase:'',
           page:1,
           size:10
         },
       }
     },
     methods:{
-      query:function(){
+      query(){
         // alert('查询')
         //调用服务端的接口
-        cmsApi.page_list(this.params.page,this.params.size, this.params).then((res)=>{
+        cmsApi.template_list(this.params.page,this.params.size, this.params).then((res)=>{
           //将res结果数据赋值给数据模型对象
           this.list = res.queryResult.list;
           this.total = res.queryResult.total;
         })
 
       },
-      changePage:function(page){//形参就是当前页码
+      changePage(page){//形参就是当前页码
         //调用query方法
         // alert(page)
         this.params.page = page;
         this.query()
       },
-      edit:function(pageId){
+      edit:function(templateId){
         //打开修改页面
         this.$router.push({
-          path:'/cms/template/edit/'+pageId,
+          path:'/cms/template/edit/'+templateId,
           query:{
             page:this.params.page,
             siteId:this.params.siteId
@@ -98,23 +92,6 @@
         })
       },
       del:function(pageId) {
-        this.$confirm('确认删除此页面吗?', '提示', {}).then(() => {
-          cmsApi.page_del(pageId).then((res)=> {
-            if (res.success) {
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
-              });
-              // 重新查询页面
-              this.query();
-            } else {
-              this.$message({
-                type:'error',
-                message:'删除失败'
-              })
-            }
-          })
-        })
       }
     },
     mounted(){
