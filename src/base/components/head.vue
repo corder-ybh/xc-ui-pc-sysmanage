@@ -3,7 +3,8 @@
 
     <el-col :span="24" class="header">
       <el-col :span="14" class="logo" >
-        <img src="/static/images/asset-logoIco-white.png" width="500px" alt="">{{collapsed ? '' : sysName}}
+        <!--logo先关掉-->
+        <!--<img src="/static/images/asset-logoIco-white.png" width="500px" alt="">{{collapsed ? '' : sysName}}-->
       </el-col>
       <!--<el-col :span="10">
         <div class="tools" @click.prevent="collapse">

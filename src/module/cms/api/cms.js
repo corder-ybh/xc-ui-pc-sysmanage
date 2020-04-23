@@ -42,6 +42,10 @@ export const page_del = id => {
   return http.requestDelete(apiUrl + '/cms/page/del/' + id)
 }
 
+export const page_post = id => {
+  return http.requestPost(apiUrl + '/cms/page/postPage/' + id)
+}
+
 /**
  * 获取模板列表
  * @param page

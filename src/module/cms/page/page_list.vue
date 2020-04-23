@@ -42,6 +42,12 @@
           <el-button type="text" @click="preview(page.row.pageId)">预览</el-button>
         </template>
       </el-table-column>
+      <el-table-column label="发布" width="80">
+        <template slot-scope="page">
+          <el-button
+            type="primary" plain @click="postPage(page.row.pageId)">发布</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       layout="prev, pager, next"
@@ -91,7 +97,7 @@
       edit:function(pageId){
         //打开修改页面
         this.$router.push({
-          path:'/cms/template/edit/'+pageId,
+          path:'/cms/page/edit/'+pageId,
           query:{
             page:this.params.page,
             siteId:this.params.siteId
@@ -119,7 +125,23 @@
       },
       preview:function(pageId) {
         window.open("http://www.xuecheng.com/cms/preview/"+pageId);
-      }
+      },
+
+      postPage (id) {
+        this.$confirm('确认发布该页面吗?', '提示', {
+        }) . then(() => {
+          cmsApi.page_post(id).then((res) => {
+            if (res.success) {
+              console.log('发布页面id=' + id);
+              this.$message.success('发布成功，请稍后查看结果');
+            } else {
+              this.$message.error('发布失败');
+            }
+          });
+        }).catch(() => {
+          this.$message.error('发布失败');
+        });
+      },
     },
     mounted(){
       //当DOM元素渲染完成后调用query
@@ -140,7 +162,7 @@
       // 从路由上获取参数
       this.params.page = Number.parseInt(this.$route.query.page||1);
       this.params.siteId = this.$route.query.siteId || '';
-    }
+    },
   }
 </script>
 
