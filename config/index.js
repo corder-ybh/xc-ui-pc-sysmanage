@@ -19,11 +19,11 @@ module.exports = {
         target: 'http://127.0.0.1:7777'
 
       },
-      '/api/cms': {
-        target: 'http://localhost:31001',
-        pathRewrite: {
-          '^/api': ''
-        }
+      '/api': {
+        target: 'http://localhost:50201',
+        // pathRewrite: {
+        //   '^/api': ''
+        // }
         //target: 'http://127.0.0.1:50201'
 
       }
